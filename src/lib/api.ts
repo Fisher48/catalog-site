@@ -29,6 +29,12 @@ export interface Category {
     slug: string;
     description?: string;
     parent?: number | Category;
+    image?: {
+        id: string;
+        filename_disk: string;
+        title?: string;
+    };
+    children?: Category[];
 }
 
 export async function getProducts(): Promise<Product[]> {
