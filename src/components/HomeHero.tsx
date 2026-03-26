@@ -9,8 +9,25 @@ export default function HomeHero() {
 
     return (
         <>
-            <section className="relative bg-gradient-to-r from-blue-900 to-blue-700 text-white">
-                <div className="absolute inset-0 bg-black opacity-50"></div>
+            <section className="relative text-white">
+                {/* Фоновое изображение */}
+                <div className="absolute inset-0">
+                    <div
+                        className="w-full h-full"
+                        style={{
+                            backgroundImage: "url('/images/hero-bg.png')",
+                            backgroundSize: "cover",
+                            backgroundPosition: "center center", // ← здесь регулируем! 0% = верх, 100% = низ
+                            backgroundRepeat: "no-repeat",
+                        }}
+                    ></div>
+                    {/* Затемнение для читаемости текста */}
+                    <div className="absolute inset-0 bg-black/60"></div>
+                </div>
+
+                {/* Градиент поверх изображения (опционально) */}
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-900/80 to-blue-700/50"></div>
+
                 <div className="container mx-auto px-4 py-24 relative z-10">
                     <div className="max-w-3xl">
                         <h1 className="text-5xl md:text-6xl font-bold mb-6">
@@ -38,23 +55,23 @@ export default function HomeHero() {
                 </div>
 
                 {/* Статистика */}
-                <div className="container mx-auto px-4 py-12 border-t border-blue-600 relative z-10">
+                <div className="container mx-auto px-4 py-12 border-t border-white/20 relative z-10">
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
                         <div>
-                            <div className="text-3xl md:text-4xl font-bold">20+</div>
-                            <div className="text-blue-200">лет на рынке</div>
+                            <div className="text-3xl md:text-4xl font-bold text-blue-300">20+</div>
+                            <div className="text-blue-100">лет на рынке</div>
                         </div>
                         <div>
-                            <div className="text-3xl md:text-4xl font-bold">5000+</div>
-                            <div className="text-blue-200">товаров в наличии</div>
+                            <div className="text-3xl md:text-4xl font-bold text-blue-300">5000+</div>
+                            <div className="text-blue-100">товаров в наличии</div>
                         </div>
                         <div>
-                            <div className="text-3xl md:text-4xl font-bold">1000+</div>
-                            <div className="text-blue-200">довольных клиентов</div>
+                            <div className="text-3xl md:text-4xl font-bold text-blue-300">1000+</div>
+                            <div className="text-blue-100">довольных клиентов</div>
                         </div>
                         <div>
-                            <div className="text-3xl md:text-4xl font-bold">24/7</div>
-                            <div className="text-blue-200">обработка заявок</div>
+                            <div className="text-3xl md:text-4xl font-bold text-blue-300">24/7</div>
+                            <div className="text-blue-100">обработка заявок</div>
                         </div>
                     </div>
                 </div>
