@@ -20,7 +20,7 @@ export default function RootLayout({
             {/* Или более новую версию */}
             <link href="https://cdn.jsdelivr.net/npm/tailwindcss@4.2.1/dist/tailwind.min.css" rel="stylesheet" />
         </head>
-        <body>
+        <body className="bg-gray-50 text-gray-900 fade-in">
         {children}
         <FloatingQuoteButton />
         </body>

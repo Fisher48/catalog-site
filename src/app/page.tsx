@@ -75,7 +75,7 @@ export default async function Home() {
                 <div className="container mx-auto px-4">
                     <div className="grid md:grid-cols-2 gap-12 items-center">
                         <div>
-                            <h2 className="text-3xl font-bold mb-6">О компании «СпецКомплект»</h2>
+                            <h2 className="text-3xl font-bold mb-6">О компании «Торговый дом Фундамент»</h2>
                             <p className="text-gray-300 mb-4">
                                 Мы работаем на рынке трубопроводной арматуры более 20 лет.
                                 За это время мы стали надежным партнером для сотен предприятий

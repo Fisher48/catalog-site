@@ -30,8 +30,7 @@ export default function ProductCard({ product }: ProductCardProps) {
 
     return (
         <>
-            <div
-                className="group bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden"
+            <div className="product-card bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden"
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
             >
@@ -40,9 +39,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                         <img
                             src={imageUrl}
                             alt={product.name}
-                            className={`w-full h-full object-cover transition-transform duration-500 ${
-                                isHovered ? 'scale-110' : 'scale-100'
-                            }`}
+                            className="product-image w-full h-full object-cover"
                             onError={() => setImageError(true)}
                         />
                     ) : (
