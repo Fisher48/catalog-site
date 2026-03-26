@@ -2,10 +2,16 @@ import Header from "@/components/Header";
 import ProductCard from "@/components/ProductCard";
 import { getProducts, getCategories } from "@/lib/api";
 import { Filter, Search } from "lucide-react";
+import Link from "next/link";
+import {buildCategoryTree} from "@/lib/categoryTree";
 
 export default async function CatalogPage() {
     const products = await getProducts();
-    const categories = await getCategories();
+    const allCategories = await getCategories();
+
+    // Строим дерево категорий и берем только корневые (без parent)
+    const categoryTree = buildCategoryTree(allCategories);
+    const rootCategories = categoryTree; // это уже корневые категории
 
     return (
         <main>
@@ -23,6 +29,54 @@ export default async function CatalogPage() {
 
             {/* Основной контент */}
             <div className="container mx-auto px-4 py-8">
+                {/* Блок корневых категорий (карточки) */}
+                {rootCategories.length > 0 && (
+                    <div className="mb-12">
+                        <h2 className="text-2xl font-bold mb-6">Категории</h2>
+                        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
+                            {rootCategories.map((cat) => {
+                                const imageId = (cat.image as any)?.id;
+                                const imageUrl = imageId
+                                    ? `http://localhost:8055/assets/${imageId}?width=200&height=200&fit=cover`
+                                    : null;
+
+                                return (
+                                    <Link
+                                        key={cat.id}
+                                        href={`/category/${cat.slug}`}
+                                        className="group"
+                                    >
+                                        <div className="bg-white rounded-xl shadow-sm hover:shadow-md transition overflow-hidden">
+                                            <div className="aspect-square bg-gray-100 overflow-hidden">
+                                                {imageUrl ? (
+                                                    <img
+                                                        src={imageUrl}
+                                                        alt={cat.name}
+                                                        className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
+                                                    />
+                                                ) : (
+                                                    <div className="w-full h-full flex items-center justify-center text-gray-400">
+                                                        📁
+                                                    </div>
+                                                )}
+                                            </div>
+                                            <div className="p-3 text-center">
+                                                <h3 className="font-medium text-gray-800 group-hover:text-blue-600 transition">
+                                                    {cat.name}
+                                                </h3>
+                                                {/* Показываем количество товаров в категории (включая подкатегории) */}
+                                                <p className="text-xs text-gray-400 mt-1">
+                                                    {getProductCountInCategory(products, cat)} товаров
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </Link>
+                                );
+                            })}
+                        </div>
+                    </div>
+                )}
+
                 <div className="flex flex-col lg:flex-row gap-8">
                     {/* Боковая панель с фильтрами */}
                     <aside className="lg:w-64 flex-shrink-0">
@@ -49,20 +103,25 @@ export default async function CatalogPage() {
                                 </div>
                             </div>
 
-                            {/* Категории */}
+                            {/* Категории в фильтре (компактный список) */}
                             <div className="mb-6">
                                 <h3 className="font-medium mb-3">Категории</h3>
-                                <div className="space-y-2">
+                                <div className="space-y-2 max-h-60 overflow-y-auto">
                                     <label className="flex items-center">
                                         <input type="checkbox" className="rounded text-blue-600 mr-2" />
                                         <span className="text-gray-700">Все товары</span>
                                         <span className="ml-auto text-sm text-gray-400">{products.length}</span>
                                     </label>
-                                    {categories.map((cat) => (
+                                    {rootCategories.map((cat) => (
                                         <label key={cat.id} className="flex items-center">
                                             <input type="checkbox" className="rounded text-blue-600 mr-2" />
                                             <span className="text-gray-700">{cat.name}</span>
-                                            <span className="ml-auto text-sm text-gray-400">12</span>
+                                            <span className="ml-auto text-sm text-gray-400">
+                                                {products.filter(p => {
+                                                    const catId = p.category ? (typeof p.category === 'object' ? p.category.id : p.category) : null;
+                                                    return catId === cat.id;
+                                                }).length}
+                                            </span>
                                         </label>
                                     ))}
                                 </div>
@@ -142,4 +201,27 @@ export default async function CatalogPage() {
             </div>
         </main>
     );
+
+    // Вспомогательная функция для подсчета товаров в категории (включая подкатегории)
+    function getProductCountInCategory(products: any[], category: any): number {
+        // Рекурсивно собираем все ID категории и её подкатегорий
+        const getAllCategoryIds = (cat: any): number[] => {
+            const ids = [cat.id];
+            if (cat.children && cat.children.length) {
+                cat.children.forEach((child: any) => {
+                    ids.push(...getAllCategoryIds(child));
+                });
+            }
+            return ids;
+        };
+
+        const categoryIds = getAllCategoryIds(category);
+
+        return products.filter(product => {
+            const productCatId = product.category
+                ? (typeof product.category === 'object' ? product.category.id : product.category)
+                : null;
+            return productCatId && categoryIds.includes(productCatId);
+        }).length;
+    }
 }
