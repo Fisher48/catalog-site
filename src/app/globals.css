@@ -4,38 +4,42 @@
 
 /* ========== ЦВЕТА ИЗ ЛОГОТИПА ========== */
 :root {
-  --primary-blue: #1E3A8A;
-  --primary-light: #3B82F6;
-  --primary-dark: #1E40AF;
-  --accent-blue: #60A5FA;
-  --bg-light: #EFF6FF;
-  --text-dark: #1F2937;
-  --text-gray: #6B7280;
+  --primary-dark: #0B1F3A;
+  --primary-gold: #C2A46D;
+  --primary-gold-light: #D4B27C;
+  --text-light: #FFFFFF;
+  --text-gray: #9CA3AF;
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+/* Кастомные фоны */
+.bg-brand-gradient {
+  background: linear-gradient(135deg, rgba(194, 164, 109, 0.08) 0%, rgba(11, 31, 58, 0.05) 100%);
 }
 
-body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-  background-color: #f9fafb;
-  color: var(--text-dark);
+.bg-brand-light {
+  background-color: #F8F5F0;
 }
 
-.container {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 0 1rem;
+.bg-brand-muted {
+  background-color: #F5F0E8;
+}
+
+.bg-brand-gradient-hero {
+  background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-gold) 100%);
 }
 
 /* ========== АНИМАЦИИ ========== */
+
+/* Базовые анимации */
 @keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(30px);
   }
   to {
     opacity: 1;
@@ -43,8 +47,59 @@ body {
   }
 }
 
-.fade-in {
-  animation: fadeIn 0.5s ease-out;
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes pulse {
@@ -56,90 +111,197 @@ body {
   }
 }
 
-/* ========== КАРТОЧКИ ТОВАРОВ ========== */
-.product-card {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
 }
 
-.product-card:hover {
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ========== ГОТОВЫЕ КЛАССЫ ========== */
+
+/* Базовые анимации */
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.animate-fade-in-down {
+  animation: fadeInDown 0.6s ease-out forwards;
+}
+
+.animate-fade-in-left {
+  animation: fadeInLeft 0.6s ease-out forwards;
+}
+
+.animate-fade-in-right {
+  animation: fadeInRight 0.6s ease-out forwards;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.5s ease-out forwards;
+}
+
+.animate-slide-in {
+  animation: slideIn 0.6s ease-out forwards;
+}
+
+/* Анимации при наведении */
+.hover-scale {
+  transition: transform 0.3s ease;
+}
+.hover-scale:hover {
+  transform: scale(1.05);
+}
+
+.hover-scale-lg:hover {
+  transform: scale(1.1);
+}
+
+.hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.hover-lift:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 25px -12px rgba(0, 0, 0, 0.15);
+}
+
+.hover-glow {
+  transition: box-shadow 0.3s ease;
+}
+.hover-glow:hover {
+  box-shadow: 0 0 20px rgba(194, 164, 109, 0.4);
+}
+
+/* Анимации загрузки */
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* Спиннер */
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(194, 164, 109, 0.3);
+  border-top-color: var(--primary-gold);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+/* Плавающая анимация (для картинок) */
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Пульсация (для кнопок) */
+.animate-pulse-on-hover:hover {
+  animation: pulse 0.3s ease-in-out;
+}
+
+/* Задержки */
+.delay-100 {
+  animation-delay: 0.1s;
+}
+.delay-200 {
+  animation-delay: 0.2s;
+}
+.delay-300 {
+  animation-delay: 0.3s;
+}
+.delay-400 {
+  animation-delay: 0.4s;
+}
+.delay-500 {
+  animation-delay: 0.5s;
+}
+
+/* Скорости */
+.duration-fast {
+  animation-duration: 0.3s;
+}
+.duration-normal {
+  animation-duration: 0.6s;
+}
+.duration-slow {
+  animation-duration: 0.9s;
+}
+
+/* ========== ЭФФЕКТЫ ДЛЯ КАРТОЧЕК ========== */
+.card-hover-effect {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.card-hover-effect:hover {
   transform: translateY(-8px);
   box-shadow: 0 20px 25px -12px rgba(0, 0, 0, 0.1);
 }
 
-.product-image {
+.image-zoom {
+  overflow: hidden;
+}
+.image-zoom img {
   transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
-
-.product-card:hover .product-image {
+.image-zoom:hover img {
   transform: scale(1.1);
 }
 
-/* ========== КАТЕГОРИИ ========== */
-.category-card {
+/* ========== ЭФФЕКТЫ ДЛЯ КНОПОК ========== */
+.btn-gold {
+  background-color: var(--primary-gold);
+  color: var(--primary-dark);
   transition: all 0.3s ease;
 }
-
-.category-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+.btn-gold:hover {
+  background-color: var(--primary-gold-light);
+  transform: translateY(-2px);
+}
+.btn-gold:active {
+  transform: translateY(0);
 }
 
-/* ========== КНОПКИ ========== */
-.btn-primary {
+.btn-outline-gold {
+  border: 2px solid var(--primary-gold);
+  color: var(--primary-gold);
   transition: all 0.3s ease;
-  background-color: var(--primary-blue);
-  color: white;
 }
-
-.btn-primary:hover {
-  background-color: var(--primary-dark);
+.btn-outline-gold:hover {
+  background-color: var(--primary-gold);
+  color: var(--primary-dark);
   transform: translateY(-2px);
 }
 
-.btn-outline {
-  transition: all 0.3s ease;
-  border: 2px solid var(--primary-blue);
-  color: var(--primary-blue);
-  background: transparent;
-}
-
-.btn-outline:hover {
-  background-color: var(--primary-blue);
+.btn-dark {
+  background-color: var(--primary-dark);
   color: white;
+  transition: all 0.3s ease;
 }
-
-/* ========== СКРОЛЛБАР ========== */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--primary-light);
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--primary-blue);
-}
-
-/* ========== МОДАЛЬНОЕ ОКНО ========== */
-@keyframes modalSlideIn {
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-.modal-content {
-  animation: modalSlideIn 0.3s ease-out;
+.btn-dark:hover {
+  background-color: var(--primary-gold);
+  color: var(--primary-dark);
+  transform: translateY(-2px);
 }
