@@ -50,7 +50,6 @@ export default function Header() {
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
 
-
     // Только корневые категории (где нет родителя)
     const rootCategories = categories.filter(cat => !cat.parent);
 
@@ -58,8 +57,8 @@ export default function Header() {
         <>
             <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
                 {/* Верхняя полоса */}
-                <div className="bg-gray-900 text-white text-sm py-2">
-                    <div className="container mx-auto px-4 flex justify-between items-center">
+                <div className="bg-gray-800 text-white text-sm py-2">
+                    <div className="container mx-auto px-6 md:px-8 lg:px-12 flex justify-between items-center">
                         <div className="flex items-center space-x-6">
                             <a href="tel:+7474123456" className="flex items-center hover:text-blue-300">
                                 <Phone size={16} className="mr-2" />
@@ -79,12 +78,16 @@ export default function Header() {
                 </div>
 
                 {/* Основное меню */}
-                <div className="container mx-auto px-4 py-4">
+                <div className="max-w-7xl mx-auto px-6 md:px-8 lg:px-12 py-4">
                     <div className="flex justify-between items-center">
                         {/* Логотип */}
-                        <Link href="/" className="flex items-center space-x-2">
-                            <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
-                                <span className="text-white font-bold text-xl">ТД</span>
+                        <Link href="/" className="flex items-center space-x-3">
+                            <div className="w-12 h-12 rounded-lg overflow-hidden bg-gray-100 flex items-center justify-center">
+                                <img
+                                    src="/images/favicon.jpg"
+                                    alt="ТД Фундамент"
+                                    className="w-full h-full object-contain"
+                                />
                             </div>
                             <div className="font-bold">
                                 <div className="text-xl text-gray-900">ТД Фундамент</div>
@@ -94,7 +97,7 @@ export default function Header() {
 
                         {/* Десктопная навигация */}
                         <nav className="hidden md:flex items-center space-x-8">
-                            <Link href="/" className="text-gray-700 hover:text-blue-600 font-medium">
+                            <Link href="/" className="hover-scale hover:text-brand-gold font-medium transition">
                                 Главная
                             </Link>
 
@@ -102,7 +105,7 @@ export default function Header() {
                             <div ref={catalogRef} className="relative">
                                 <button
                                     onClick={() => setIsCatalogOpen(!isCatalogOpen)}
-                                    className="flex items-center text-gray-700 hover:text-blue-600 font-medium"
+                                    className="flex items-center hover-scale hover:text-brand-gold font-medium transition"
                                 >
                                     Каталог
                                     <ChevronDown
@@ -111,9 +114,10 @@ export default function Header() {
                                     />
                                 </button>
 
-                                {/* Выпадающее меню (двухуровневое) */}
+                                {/* Выпадающее меню */}
                                 {isCatalogOpen && (
-                                    <div className="absolute top-full left-0 mt-2 bg-white rounded-lg shadow-xl border border-gray-100 z-50 min-w-[220px]">
+                                    <div className="absolute top-full left-0 mt-2 bg-white rounded-lg
+                                    shadow-xl border border-gray-100 z-50 min-w-[220px]">
                                         {isLoading ? (
                                             <div className="px-4 py-3 text-gray-500">Загрузка...</div>
                                         ) : rootCategories.length > 0 ? (
@@ -122,7 +126,8 @@ export default function Header() {
                                                     <div key={cat.id} className="relative">
                                                         <Link
                                                             href={`/category/${cat.slug}`}
-                                                            className="flex items-center justify-between px-4 py-2 hover:bg-blue-50 hover:text-blue-600"
+                                                            className="flex items-center hover-scale justify-between px-4 py-2
+                                                            hover:bg-brand-gold/10 hover:text-brand-gold transition"
                                                             onClick={() => setIsCatalogOpen(false)}
                                                         >
                                                             <span>{cat.name}</span>
@@ -130,7 +135,7 @@ export default function Header() {
                                                                 <ChevronRight size={16} className="text-gray-400" />
                                                             )}
                                                         </Link>
-                                                        {/* Подкатегории (второй уровень) - появляются при наведении на родительский div */}
+                                                        {/* Подкатегории */}
                                                         {cat.children && cat.children.length > 0 && (
                                                             <div
                                                                 className="absolute left-full top-0 ml-1 hidden hover:block bg-white rounded-lg shadow-lg border border-gray-100 min-w-[200px] z-50"
@@ -146,8 +151,8 @@ export default function Header() {
                                                                     {cat.children.map((sub) => (
                                                                         <Link
                                                                             key={sub.id}
-                                                                            href={`/catalog/${sub.slug}`}
-                                                                            className="block px-4 py-2 hover:bg-blue-50 hover:text-blue-600 whitespace-nowrap"
+                                                                            href={`/category/${sub.slug}`}
+                                                                            className="block px-4 py-2 hover:bg-brand-gold/10 hover:text-brand-gold whitespace-nowrap transition"
                                                                             onClick={() => setIsCatalogOpen(false)}
                                                                         >
                                                                             {sub.name}
@@ -162,7 +167,8 @@ export default function Header() {
                                         ) : (
                                             <Link
                                                 href="/catalog"
-                                                className="block px-4 py-2 hover:bg-blue-50 hover:text-blue-600"
+                                                className="block px-4 py-2 hover:bg-brand-gold/10
+                                                hover:text-brand-gold transition"
                                                 onClick={() => setIsCatalogOpen(false)}
                                             >
                                                 Все товары
@@ -172,13 +178,13 @@ export default function Header() {
                                 )}
                             </div>
 
-                            <Link href="/about" className="text-gray-700 hover:text-blue-600 font-medium">
+                            <Link href="/about" className="hover-scale hover:text-brand-gold font-medium transition">
                                 О компании
                             </Link>
-                            <Link href="/delivery" className="text-gray-700 hover:text-blue-600 font-medium">
+                            <Link href="/delivery" className="hover-scale hover:text-brand-gold font-medium transition">
                                 Доставка
                             </Link>
-                            <Link href="/contacts" className="text-gray-700 hover:text-blue-600 font-medium">
+                            <Link href="/contacts" className="hover-scale hover:text-brand-gold font-medium transition">
                                 Контакты
                             </Link>
                         </nav>
@@ -187,14 +193,14 @@ export default function Header() {
                         <div className="flex items-center space-x-4">
                             <button
                                 onClick={() => setIsQuoteOpen(true)}
-                                className="hidden md:block bg-blue-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-blue-700 transition"
+                                className="hidden md:block btn-dark px-6 py-2 rounded-lg font-medium"
                             >
                                 Запросить цену
                             </button>
 
                             {/* Кнопка мобильного меню */}
                             <button
-                                className="md:hidden p-2"
+                                className="md:hidden p-2 text-gray-600"
                                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                             >
                                 {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -202,23 +208,23 @@ export default function Header() {
                         </div>
                     </div>
 
-                    {/* Мобильное меню (упрощённо, с подкатегориями) */}
+                    {/* Мобильное меню */}
                     {isMenuOpen && (
                         <nav className="md:hidden mt-4 py-4 border-t border-gray-200">
-                            <Link href="/" className="block py-2 text-gray-700" onClick={() => setIsMenuOpen(false)}>
+                            <Link href="/" className="block py-2 text-gray-700 hover:text-brand-gold" onClick={() => setIsMenuOpen(false)}>
                                 Главная
                             </Link>
                             <div className="py-2">
                                 <div className="font-medium text-gray-700 mb-2">Каталог</div>
                                 <div className="pl-4 space-y-1">
-                                    <Link href="/catalog" className="block py-1 text-gray-600" onClick={() => setIsMenuOpen(false)}>
+                                    <Link href="/catalog" className="block py-1 text-gray-600 hover:text-brand-gold" onClick={() => setIsMenuOpen(false)}>
                                         Все товары
                                     </Link>
                                     {!isLoading && rootCategories.map((cat) => (
                                         <div key={cat.id}>
                                             <Link
-                                                href={`/catalog/${cat.slug}`}
-                                                className="block py-1 text-gray-600"
+                                                href={`/category/${cat.slug}`}
+                                                className="block py-1 text-gray-600 hover:text-brand-gold"
                                                 onClick={() => setIsMenuOpen(false)}
                                             >
                                                 {cat.name}
@@ -228,8 +234,8 @@ export default function Header() {
                                                     {cat.children.map((sub) => (
                                                         <Link
                                                             key={sub.id}
-                                                            href={`/catalog/${sub.slug}`}
-                                                            className="block py-1 text-sm text-gray-500"
+                                                            href={`/category/${sub.slug}`}
+                                                            className="block py-1 text-sm text-gray-500 hover:text-brand-gold"
                                                             onClick={() => setIsMenuOpen(false)}
                                                         >
                                                             {sub.name}
@@ -241,13 +247,13 @@ export default function Header() {
                                     ))}
                                 </div>
                             </div>
-                            <Link href="/about" className="block py-2 text-gray-700" onClick={() => setIsMenuOpen(false)}>
+                            <Link href="/about" className="block py-2 text-gray-700 hover:text-brand-gold" onClick={() => setIsMenuOpen(false)}>
                                 О компании
                             </Link>
-                            <Link href="/delivery" className="block py-2 text-gray-700" onClick={() => setIsMenuOpen(false)}>
+                            <Link href="/delivery" className="block py-2 text-gray-700 hover:text-brand-gold" onClick={() => setIsMenuOpen(false)}>
                                 Доставка
                             </Link>
-                            <Link href="/contacts" className="block py-2 text-gray-700" onClick={() => setIsMenuOpen(false)}>
+                            <Link href="/contacts" className="block py-2 text-gray-700 hover:text-brand-gold" onClick={() => setIsMenuOpen(false)}>
                                 Контакты
                             </Link>
                             <button
@@ -255,7 +261,7 @@ export default function Header() {
                                     setIsQuoteOpen(true);
                                     setIsMenuOpen(false);
                                 }}
-                                className="w-full mt-4 bg-blue-600 text-white px-6 py-2 rounded-lg font-medium"
+                                className="w-full mt-4 btn-dark px-6 py-2 rounded-lg font-medium"
                             >
                                 Запросить цену
                             </button>
