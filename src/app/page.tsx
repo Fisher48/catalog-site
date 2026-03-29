@@ -2,7 +2,7 @@ import Header from "@/components/Header";
 import Link from "next/link";
 import { getProducts } from "@/lib/api";
 import ProductCard from "@/components/ProductCard";
-import HomeHero from "@/components/HomeHero"; // Новый клиентский компонент для Hero секции
+import HomeHero from "@/components/HomeHero";
 
 export default async function Home() {
     const products = await getProducts();
@@ -17,7 +17,7 @@ export default async function Home() {
 
             {/* Преимущества */}
             <section className="py-16 bg-gray-50">
-                <div className="container mx-auto px-4">
+                <div className="container mx-auto px-12">
                     <h2 className="text-3xl font-bold text-center mb-12">Почему выбирают нас</h2>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                         <div className="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition">
@@ -54,7 +54,7 @@ export default async function Home() {
             {/* Популярные товары */}
             {featuredProducts.length > 0 && (
                 <section className="py-16">
-                    <div className="container mx-auto px-4">
+                    <div className="container mx-auto px-16">
                         <div className="flex justify-between items-center mb-8">
                             <h2 className="text-3xl font-bold">Популярные товары</h2>
                             <Link href="/catalog" className="text-blue-600 hover:text-blue-700 font-medium">
@@ -87,27 +87,28 @@ export default async function Home() {
                             </p>
                             <Link
                                 href="/about"
-                                className="inline-block border-2 border-white px-6 py-3 rounded-lg font-medium hover:bg-white hover:text-gray-900 transition"
+                                className="btn-gold hover-glow border-1 border-dark px-6 py-3 rounded-lg
+                                font-medium hover:bg-white hover:text-gray-900 transition"
                             >
                                 Подробнее о нас
                             </Link>
                         </div>
                         <div className="grid grid-cols-2 gap-4">
-                            <div className="bg-gray-800 p-6 rounded-lg">
-                                <div className="text-3xl font-bold text-blue-400 mb-2">20+</div>
-                                <div className="text-gray-300">лет успешной работы</div>
+                            <div className="bg-gray-800 p-6 rounded-lg card-hover-effect">
+                                <div className="text-2xl md:text-3xl font-bold text-[#C2A46D] mb-2">20+</div>
+                                <div className="text-gray-300 font-bold">лет успешной работы</div>
                             </div>
-                            <div className="bg-gray-800 p-6 rounded-lg">
-                                <div className="text-3xl font-bold text-blue-400 mb-2">500+</div>
-                                <div className="text-gray-300">производителей</div>
+                            <div className="bg-gray-800 p-6 rounded-lg card-hover-effect">
+                                <div className="text-2xl md:text-3xl font-bold text-[#C2A46D] mb-2">500+</div>
+                                <div className="text-gray-300 font-bold">производителей</div>
                             </div>
-                            <div className="bg-gray-800 p-6 rounded-lg">
-                                <div className="text-3xl font-bold text-blue-400 mb-2">10000+</div>
-                                <div className="text-gray-300">довольных клиентов</div>
+                            <div className="bg-gray-800 p-6 rounded-lg card-hover-effect">
+                                <div className="text-2xl md:text-3xl font-bold text-[#C2A46D] mb-2">10000+</div>
+                                <div className="text-gray-300 font-bold">довольных клиентов</div>
                             </div>
-                            <div className="bg-gray-800 p-6 rounded-lg">
-                                <div className="text-3xl font-bold text-blue-400 mb-2">24/7</div>
-                                <div className="text-gray-300">онлайн поддержка</div>
+                            <div className="bg-gray-800 p-6 rounded-lg card-hover-effect">
+                                <div className="text-2xl md:text-3xl font-bold text-[#C2A46D] mb-2">24/7</div>
+                                <div className="text-gray-300 font-bold">онлайн поддержка</div>
                             </div>
                         </div>
                     </div>
