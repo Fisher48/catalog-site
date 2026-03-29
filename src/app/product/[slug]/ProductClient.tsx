@@ -18,7 +18,7 @@ export default function ProductClient({ product }: ProductClientProps) {
         ? `http://localhost:8055/assets/${imageId}?width=800&height=800&fit=cover`
         : null;
 
-    // Преимущества товара (можно вынести в Directus)
+    // Преимущества товара
     const features = [
         { icon: Check, text: "Гарантия качества", desc: "Сертифицированная продукция" },
         { icon: Shield, text: "Надежность", desc: "Срок службы 25 лет" },
@@ -32,15 +32,15 @@ export default function ProductClient({ product }: ProductClientProps) {
             <div className="container mx-auto px-4 py-8">
                 {/* Хлебные крошки */}
                 <div className="text-sm text-gray-500 mb-6">
-                    <Link href="/" className="hover:text-blue-600">Главная</Link>
+                    <Link href="/" className="hover:text-brand-gold transition">Главная</Link>
                     <span className="mx-2">/</span>
-                    <Link href="/catalog" className="hover:text-blue-600">Каталог</Link>
+                    <Link href="/catalog" className="hover:text-brand-gold transition">Каталог</Link>
                     {product.category && (
                         <>
                             <span className="mx-2">/</span>
                             <Link
                                 href={`/category/${product.category.slug}`}
-                                className="hover:text-blue-600"
+                                className="hover:text-brand-gold transition"
                             >
                                 {product.category.name}
                             </Link>
@@ -53,7 +53,7 @@ export default function ProductClient({ product }: ProductClientProps) {
                 {/* Основная информация о товаре */}
                 <div className="grid md:grid-cols-2 gap-8 mb-12">
                     {/* Фото */}
-                    <div className="bg-white rounded-xl border border-gray-100 p-6">
+                    <div className="bg-white rounded-xl border border-gray-100 p-6 max-w-md mx-auto">
                         <div className="aspect-square relative">
                             {imageUrl ? (
                                 <img
@@ -71,7 +71,7 @@ export default function ProductClient({ product }: ProductClientProps) {
 
                     {/* Информация */}
                     <div>
-                        <h1 className="text-3xl font-bold mb-4">{product.name}</h1>
+                        <h1 className="text-3xl font-bold mb-4 text-brand-dark">{product.name}</h1>
 
                         {product.article && (
                             <p className="text-gray-500 mb-4">
@@ -83,7 +83,7 @@ export default function ProductClient({ product }: ProductClientProps) {
                         <div className="bg-gray-50 rounded-xl p-6 mb-6">
                             <div className="flex items-baseline gap-4 mb-4">
                                 {product.price ? (
-                                    <span className="text-4xl font-bold text-blue-600">
+                                    <span className="text-4xl font-bold text-brand-gold">
                                         {product.price.toLocaleString()} ₽
                                     </span>
                                 ) : (
@@ -115,7 +115,7 @@ export default function ProductClient({ product }: ProductClientProps) {
                         {/* Кнопка запроса */}
                         <button
                             onClick={() => setIsQuoteOpen(true)}
-                            className="w-full bg-blue-600 text-white py-4 rounded-xl text-lg font-semibold hover:bg-blue-700 transition transform hover:scale-105 mb-6"
+                            className="w-full btn-dark py-4 rounded-xl text-lg font-semibold mb-6 hover-scale"
                         >
                             Запросить цену
                         </button>
@@ -124,7 +124,7 @@ export default function ProductClient({ product }: ProductClientProps) {
                         <div className="grid grid-cols-2 gap-4">
                             {features.map((feature, idx) => (
                                 <div key={idx} className="flex items-start gap-3">
-                                    <feature.icon size={20} className="text-blue-600 flex-shrink-0 mt-0.5" />
+                                    <feature.icon size={20} className="text-brand-gold flex-shrink-0 mt-0.5" />
                                     <div>
                                         <div className="font-medium text-gray-900">{feature.text}</div>
                                         <div className="text-sm text-gray-500">{feature.desc}</div>
@@ -143,8 +143,8 @@ export default function ProductClient({ product }: ProductClientProps) {
                                 onClick={() => setActiveTab("description")}
                                 className={`py-4 font-medium transition ${
                                     activeTab === "description"
-                                        ? "text-blue-600 border-b-2 border-blue-600"
-                                        : "text-gray-500 hover:text-gray-700"
+                                        ? "text-brand-gold border-b-2 border-brand-gold"
+                                        : "text-gray-500 hover:text-brand-gold"
                                 }`}
                             >
                                 Описание
@@ -153,8 +153,8 @@ export default function ProductClient({ product }: ProductClientProps) {
                                 onClick={() => setActiveTab("specifications")}
                                 className={`py-4 font-medium transition ${
                                     activeTab === "specifications"
-                                        ? "text-blue-600 border-b-2 border-blue-600"
-                                        : "text-gray-500 hover:text-gray-700"
+                                        ? "text-brand-gold border-b-2 border-brand-gold"
+                                        : "text-gray-500 hover:text-brand-gold"
                                 }`}
                             >
                                 Характеристики
@@ -163,8 +163,8 @@ export default function ProductClient({ product }: ProductClientProps) {
                                 onClick={() => setActiveTab("delivery")}
                                 className={`py-4 font-medium transition ${
                                     activeTab === "delivery"
-                                        ? "text-blue-600 border-b-2 border-blue-600"
-                                        : "text-gray-500 hover:text-gray-700"
+                                        ? "text-brand-gold border-b-2 border-brand-gold"
+                                        : "text-gray-500 hover:text-brand-gold"
                                 }`}
                             >
                                 Доставка и оплата
@@ -194,7 +194,7 @@ export default function ProductClient({ product }: ProductClientProps) {
                                         {Object.entries(product.specifications).map(([key, value]) => (
                                             <div key={key} className="flex py-3 border-b border-gray-100">
                                                 <span className="w-2/5 text-gray-600">{key}:</span>
-                                                <span className="w-3/5 font-medium text-gray-900">{String(value)}</span>
+                                                <span className="w-3/5 font-medium text-brand-dark">{String(value)}</span>
                                             </div>
                                         ))}
                                     </div>
@@ -208,14 +208,14 @@ export default function ProductClient({ product }: ProductClientProps) {
                         {activeTab === "delivery" && (
                             <div className="space-y-4">
                                 <div>
-                                    <h3 className="font-semibold text-lg mb-2">Доставка</h3>
+                                    <h3 className="font-semibold text-lg mb-2 text-brand-dark">Доставка</h3>
                                     <p className="text-gray-700">
                                         Доставка по Липецку и Липецкой области осуществляется в день заказа.
                                         Отправка в регионы России — транспортными компаниями. Срок поставки от 1 дня.
                                     </p>
                                 </div>
                                 <div>
-                                    <h3 className="font-semibold text-lg mb-2">Оплата</h3>
+                                    <h3 className="font-semibold text-lg mb-2 text-brand-dark">Оплата</h3>
                                     <p className="text-gray-700">
                                         • Наличный расчет<br />
                                         • Безналичный расчет<br />
@@ -224,7 +224,7 @@ export default function ProductClient({ product }: ProductClientProps) {
                                     </p>
                                 </div>
                                 <div>
-                                    <h3 className="font-semibold text-lg mb-2">Документы</h3>
+                                    <h3 className="font-semibold text-lg mb-2 text-brand-dark">Документы</h3>
                                     <p className="text-gray-700">
                                         Каждый заказ сопровождается полным пакетом документов:
                                         накладные, счета-фактуры, паспорта изделий, сертификаты качества.
@@ -236,23 +236,31 @@ export default function ProductClient({ product }: ProductClientProps) {
                 </div>
 
                 {/* Блок "Почему выбирают нас" */}
-                <div className="mt-12 bg-gradient-to-r from-blue-50 to-blue-100 rounded-xl p-8">
-                    <h2 className="text-2xl font-bold text-center mb-8">Почему выбирают Торговый дом Фундамент</h2>
+                <div
+                    className="mt-12 rounded-xl p-8"
+                    style={{
+                        background: "linear-gradient(135deg, rgba(194, 164, 109, 0.25) 0%, rgba(11, 31, 58, 0.12) 100%)",
+                        border: "1px solid rgba(194, 164, 109, 0.35)"
+                    }}
+                >
+                    <h2 className="text-2xl font-bold text-center mb-8 text-brand-dark">
+                        Почему выбирают Торговый дом Фундамент
+                    </h2>
                     <div className="grid md:grid-cols-4 gap-6">
                         <div className="text-center">
-                            <div className="text-3xl font-bold text-blue-600 mb-2">20+</div>
+                            <div className="text-3xl font-bold text-brand-gold mb-2">20+</div>
                             <div className="text-gray-600">лет на рынке</div>
                         </div>
                         <div className="text-center">
-                            <div className="text-3xl font-bold text-blue-600 mb-2">5000+</div>
+                            <div className="text-3xl font-bold text-brand-gold mb-2">5000+</div>
                             <div className="text-gray-600">товаров в наличии</div>
                         </div>
                         <div className="text-center">
-                            <div className="text-3xl font-bold text-blue-600 mb-2">10000+</div>
+                            <div className="text-3xl font-bold text-brand-gold mb-2">10000+</div>
                             <div className="text-gray-600">довольных клиентов</div>
                         </div>
                         <div className="text-center">
-                            <div className="text-3xl font-bold text-blue-600 mb-2">24/7</div>
+                            <div className="text-3xl font-bold text-brand-gold mb-2">24/7</div>
                             <div className="text-gray-600">обработка заявок</div>
                         </div>
                     </div>
